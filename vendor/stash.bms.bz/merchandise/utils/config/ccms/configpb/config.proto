@@ -1,0 +1,16 @@
+syntax = "proto3";
+package configpb;
+
+option csharp_namespace = "bms.configpb";
+
+message Input{
+    string key =1;
+}
+
+message Output{
+	string value = 1;
+}
+
+service CCMS {
+  rpc Get(Input) returns (Output) {}
+}

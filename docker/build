@@ -1,0 +1,28 @@
+#!/bin/bash
+#1st arguement is the buildname and 2nd arg is the make file arg , both are optional
+
+#declarations
+dir="$(pwd)"
+parentdir="$(dirname "$dir")"
+path=""
+BUILDNAME=$1
+DOCKERFILE=""
+makeArgs=$2
+
+#script logic
+if [ "$makeArgs" == "TRUE" ]; then
+    . $dir/docker/VERSION
+    DOCKERFILE=$dir/docker/Dockerfile
+    path=$dir
+else 
+    . ./VERSION
+    DOCKERFILE=Dockerfile
+    path=$parentdir
+fi
+
+#if no name arguement is passed then set default name
+if [ "$BUILDNAME" == "" ]; then BUILDNAME="go-boilerplate"; fi
+
+# docker build script
+docker build -f ${DOCKERFILE} --tag "${BUILDNAME}:${VERSION}" --rm=true --force-rm=true --no-cache=true ${path}
+
