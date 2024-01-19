@@ -8,7 +8,7 @@ pipeline {
                     git 'https://github.com/unboxingcommunity/go-app-boilerplate.git'
 
                     dir('docker') {
-                        docker.build('Dockerfile:latest')
+                        docker.build('Dockerfile')
                     }
                 }
             }
