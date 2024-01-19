@@ -2,37 +2,14 @@ pipeline {
     agent any
 
     stages {
-        stage('Clone Repository') {
-            steps {
-                // Checkout the Git repository and branch
-                git branch: 'build-Branch', url: 'https://github.com/apoorvakumar-UBC/go-app-boilerplate.git'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
-                // Build Docker image using the Dockerfile in the repository
                 script {
-                    def dockerImage = docker.build('go-app-boilerplate:latest', '.')
-                }
-            }
-        }
+                    git 'https://github.com/unboxingcommunity/go-app-boilerplate.git'
 
-        stage('Run Docker Container') {
-            steps {
-                // Run Docker container from the built image
-                script {
-                    def dockerContainer = docker.image('go-app-boilerplate:latest').run('-p 8080:80', '-d')
-                }
-            }
-        }
-
-        stage('Cleanup') {
-            steps {
-                // Clean up Docker resources if needed
-                script {
-                    dockerContainer.stop()
-                    dockerContainer.remove()
+                    dir('docker') {
+                        docker.build('dockerfile:latest')
+                    }
                 }
             }
         }
