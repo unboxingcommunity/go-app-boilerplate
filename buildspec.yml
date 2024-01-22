@@ -4,13 +4,13 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+      - $(aws ecr get-login-password --region us-east-1) 
 
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build -t 972662439583.dkr.ecr.us-east-1.amazonaws.com/demo1 .
+      - docker build -f docker/Dockerfile -t 972662439583.dkr.ecr.us-east-1.amazonaws.com/demo1 .
 
   post_build:
     commands:
