@@ -8,10 +8,11 @@ pipeline {
                     git 'https://github.com/unboxingcommunity/go-app-boilerplate.git'
 
                     dir('docker') {
-                        docker.build('Dockerfile')
+                        sh 'docker build -f Dockerfile .'
                     }
                 }
             }
         }
     }
 }
+
